@@ -16,7 +16,7 @@ def interpreter_formule(formule):
         return lambda fr, **kwargs: [2 * fr]
     elif "z × fr" in f or "z*fr" in f:
         return lambda fr, Z, **kwargs: [Z * fr]
-    elif "fs ± fr" in f:
+    elif "fs ± fr" in f or "fe ± fr" in f:
         return lambda fr, fs, **kwargs: [fs + fr, fs - fr]
     elif "0.42" in f and "fr" in f:
         return lambda fr, **kwargs: [fr * 0.42, fr * 0.48]
@@ -24,8 +24,10 @@ def interpreter_formule(formule):
         return lambda fr, **kwargs: [fr]
     elif "fs" in f:
         return lambda fs, **kwargs: [fs]
-    elif "50" in f:
-        return lambda **kwargs: [50]
+    elif "50" in f and "1 à 4" in f:
+        return lambda **kwargs: [i * 50 for i in range(1, 5)]
+    elif "2 × fs" in f:
+        return lambda fs, **kwargs: [2 * fs]
     else:
         return lambda **kwargs: []
 
